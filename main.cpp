@@ -22,7 +22,7 @@ int main(){
   int n=SIZE;
   double** A=new double* [n];
   double** Acp=new double* [n];
-
+  double** wwa=new double* [n]; //wektor wlasny a
   double *A1D=new double [n*n];
   //-----
   double* d=new double[n]; //skladowe diagonali
@@ -39,6 +39,7 @@ int main(){
     z2D[i]=new double [n];
     Acp[i]=new double [n];
     z[i]=new double [n];
+    wwa[i]=new double [n];
     for(int j=0;j<n; j++){
       A[i][j]=sqrt((i+1)+(j+1));
       Acp[i][j]=sqrt((i+1)+(j+1));
@@ -82,11 +83,64 @@ int main(){
   }
   
   
-  //przeksztalcanie wektorow wlasnych macierzy A
+  //przeksztalcanie wektorow wlasnych macierzy A=P
+  //wwa=A*z2D BLAD
+  for (int i=0; i<n; i++){
+    for(int j=0; j<n; j++){
+      wwa[i][j]=0;
+    }
+  }
+  for(int i=0; i<n; i++){
+    for(int j=0; j<n; j++){
+      for(int k=0; k<n; k++){
+        wwa[i][j]+=A[i][k]*z2D[k][j];//+wwa[i][j]; 
+      }
+    }	
+  }
+  //---------------------------------------------
+  /*
+  fprintf(fa,"\n \n TEST A: \n ");
+  for(int i=0; i<n; i++){
+    for(int j=0; j<n; j++){
+      fprintf(fa," %f ", A[i][j]);
+    }
+    fprintf(fa,"\n");
+  }
+
+ fprintf(fa,"\n \n TEST z2D: \n ");
+  for(int i=0; i<n; i++){
+    for(int j=0; j<n; j++){
+      fprintf(fa," %f ", z2D[i][j]);
+    }
+    fprintf(fa,"\n");
+  }
+  */
+  //--------------------------------------------
+  
+  fprintf(fa,"\n \n Wektory wlasne macierzy A: \n ");
+
+  for(int i=0; i<n; i++){
+    for(int j=0; j<n; j++){
+      fprintf(fa," %f ", wwa[i][j]);
+    }
+    fprintf(fa,"\n");
+  }
+
+  //liczenie beta
 
 
 
 
+
+
+
+
+  
+
+
+
+
+  
 }
 
 
