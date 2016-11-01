@@ -23,13 +23,14 @@ int main(){
   double** A=new double* [n];
   double** Acp=new double* [n];
   double** wwa=new double* [n]; //wektor wlasny a
-  double *A1D=new double [n*n];
+  double** awwa=new double* [n];
+  double *A1D=new double [n*n];//2n
   //-----
   double* d=new double[n]; //skladowe diagonali
   double* e=new double[n-1]; //skladowe poddiagonali
   //-----
   double** z=new double*[n];
-  double* z1D=new double [n*n];
+  double* z1D=new double [n*n]; //2n
   double** z2D=new double* [n];
 
 
@@ -40,6 +41,7 @@ int main(){
     Acp[i]=new double [n];
     z[i]=new double [n];
     wwa[i]=new double [n];
+    awwa[i]=new double [n];
     for(int j=0;j<n; j++){
       A[i][j]=sqrt((i+1)+(j+1));
       Acp[i][j]=sqrt((i+1)+(j+1));
@@ -93,30 +95,11 @@ int main(){
   for(int i=0; i<n; i++){
     for(int j=0; j<n; j++){
       for(int k=0; k<n; k++){
-        wwa[i][j]+=A[i][k]*z2D[k][j];//+wwa[i][j]; 
+        wwa[i][j]=A[i][k]*z2D[k][j]+wwa[i][j]; 
       }
     }	
   }
-  //---------------------------------------------
-  /*
-  fprintf(fa,"\n \n TEST A: \n ");
-  for(int i=0; i<n; i++){
-    for(int j=0; j<n; j++){
-      fprintf(fa," %f ", A[i][j]);
-    }
-    fprintf(fa,"\n");
-  }
 
- fprintf(fa,"\n \n TEST z2D: \n ");
-  for(int i=0; i<n; i++){
-    for(int j=0; j<n; j++){
-      fprintf(fa," %f ", z2D[i][j]);
-    }
-    fprintf(fa,"\n");
-  }
-  */
-  //--------------------------------------------
-  
   fprintf(fa,"\n \n Wektory wlasne macierzy A: \n ");
 
   for(int i=0; i<n; i++){
@@ -127,16 +110,41 @@ int main(){
   }
 
   //liczenie beta
+  //awwa=x*wwa
+  //beta=iloczyn skalarny wwa i A (isa) przez iloczyn skalarny wwa i wwa (isw)
 
+  for(int i=0; i<n; i++){
+    for(int j=0; j<n; j++){
+      for(int k=0; k<n; k++){
+        awwa[i][j]=Acp[i][k]*wwa[k][j]+awwa[i][j]; 
+      }
+    }	
+  }
 
+  double *isa=new double[n];
+  double *isw=new double[n];
+  double *beta=new double[n];
 
-
-
-
-
-
+   
+  for(int i=0; i<n; i++){
+    isa[i]=0;
+    isw[i]=0;
+    for(int j=0; j<n; j++){
+      isa[i]=wwa[j][i]*awwa[j][i]+isa[i];
+      isw[i]=wwa[j][i]*wwa[j][i]+isw[i];
+    }
+    
+    std::cout<<"isa"<<isa[i]<<std::endl;
+    beta[i]=isa[i]/isw[i];
+  }
   
+  fprintf(fa,"\n \n beta: \n [ ");
 
+  for(int i=0; i<n; i++){
+      fprintf(fa," %f ", beta[i]);
+  }   
+    fprintf(fa,"] \n");
+  
 
 
 
