@@ -17,20 +17,19 @@ void print_matrix(double** matrix){
 
 int main(){
   FILE *fa=fopen("dane.dat","w");
-  //fprintf(fa," %f %f \n",h*i, x[i]);
 
   int n=SIZE;
   double** A=new double* [n];
   double** Acp=new double* [n];
   double** wwa=new double* [n]; //wektor wlasny a
   double** awwa=new double* [n];
-  double *A1D=new double [n*n];//2n
+  double *A1D=new double [n*n];
   //-----
   double* d=new double[n]; //skladowe diagonali
   double* e=new double[n-1]; //skladowe poddiagonali
   //-----
   double** z=new double*[n];
-  double* z1D=new double [n*n]; //2n
+  double* z1D=new double [n*n]; 
   double** z2D=new double* [n];
 
 
@@ -86,7 +85,6 @@ int main(){
   
   
   //przeksztalcanie wektorow wlasnych macierzy A=P
-  //wwa=A*z2D BLAD
   for (int i=0; i<n; i++){
     for(int j=0; j<n; j++){
       wwa[i][j]=0;
@@ -109,9 +107,7 @@ int main(){
     fprintf(fa,"\n");
   }
 
-  //liczenie beta
-  //awwa=x*wwa
-  //beta=iloczyn skalarny wwa i A (isa) przez iloczyn skalarny wwa i wwa (isw)
+  //liczenie beta:
 
   for(int i=0; i<n; i++){
     for(int j=0; j<n; j++){
@@ -124,7 +120,6 @@ int main(){
   double *isa=new double[n];
   double *isw=new double[n];
   double *beta=new double[n];
-
    
   for(int i=0; i<n; i++){
     isa[i]=0;
@@ -144,11 +139,7 @@ int main(){
       fprintf(fa," %f ", beta[i]);
   }   
     fprintf(fa,"] \n");
-  
-
-
-
-  
+    
 }
 
 
